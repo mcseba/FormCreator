@@ -233,15 +233,15 @@ class App {
     }
 }
 
-const textbox = new TextBox('Dane1', 'Textbox');
-const textarea = new TextArea('Dane2', 'Textarea');
-const email = new EmailField('Dane3', 'Email');
-const date = new DateField('Dane4', 'Data');
-const checkbox = new CheckboxField('Dane4', 'Checkbox');
-const select = new SelectField('Dane5', 'Checkbox', 'opt1', 'opt2', 'opt3');
+const textbox = new TextBox('Imie', 'Imię');
+const textbox2 = new TextBox('Nazwisko', 'Nazwisko');
+const email = new EmailField('Email', 'Email');
+const select = new SelectField('SelectKierunek', 'Kierunek studiów', 'Informatyka', 'Administracja', 'Browarnictwo');
+const checkbox = new CheckboxField('eLearning', 'Czy preferujesz e-learning?');
+const textarea = new TextArea('Uwagi', 'Uwagi');
 
 window.onload = function() {
-    const app = new App(textbox, textarea, email, date, checkbox, select);
+    const app = new App(textbox, textbox2, email, select, checkbox, textarea);
     app.appStart();
 }
 

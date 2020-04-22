@@ -179,13 +179,13 @@ var App = /** @class */ (function () {
     };
     return App;
 }());
-var textbox = new TextBox('Dane1', 'Textbox');
-var textarea = new TextArea('Dane2', 'Textarea');
-var email = new EmailField('Dane3', 'Email');
-var date = new DateField('Dane4', 'Data');
-var checkbox = new CheckboxField('Dane4', 'Checkbox');
-var select = new SelectField('Dane5', 'Checkbox', 'opt1', 'opt2', 'opt3');
+var textbox = new TextBox('Imie', 'Imię');
+var textbox2 = new TextBox('Nazwisko', 'Nazwisko');
+var email = new EmailField('Email', 'Email');
+var select = new SelectField('SelectKierunek', 'Kierunek studiów', 'Informatyka', 'Administracja', 'Browarnictwo');
+var checkbox = new CheckboxField('eLearning', 'Czy preferujesz e-learning?');
+var textarea = new TextArea('Uwagi', 'Uwagi');
 window.onload = function () {
-    var app = new App(textbox, textarea, email, date, checkbox, select);
+    var app = new App(textbox, textbox2, email, select, checkbox, textarea);
     app.appStart();
 };

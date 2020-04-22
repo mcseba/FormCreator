@@ -27,7 +27,7 @@ form {
     padding: 10px;
 }
 
-input, textarea {
+input, textarea, label {
     margin: 5px;
     display: block;
 }
