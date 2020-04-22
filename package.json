@@ -1,0 +1,23 @@
+{
+  "name": "FormCreator",
+  "version": "1.0.0",
+  "description": "Simple web app form creator written using TypeScript for my web-programming classess.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcseba/FormCreator.git"
+  },
+  "keywords": [],
+  "author": "Sebastian Rajtar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mcseba/FormCreator/issues"
+  },
+  "homepage": "https://github.com/mcseba/FormCreator#readme",
+  "dependencies": {
+    "typescript": "^3.8.3"
+  }
+}
