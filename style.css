@@ -52,3 +52,13 @@ input, textarea {
 	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
 	background-color:#5cbf2a;
 }
+
+.lista {
+    min-width: 250px;
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid rgb(88, 88, 88);
+    margin-left: 10%;
+    margin-top: 10px;
+    padding: 10px;
+}

@@ -17,6 +17,7 @@ var TextBox = /** @class */ (function () {
         this.Label = document.createElement('label');
         this.Label.innerHTML = label;
         this.Label.htmlFor = name;
+        this.labelValue = label;
     }
     TextBox.prototype.render = function () {
         return this.element;
@@ -35,6 +36,7 @@ var TextArea = /** @class */ (function () {
         this.Label = document.createElement('label');
         this.Label.innerHTML = label;
         this.Label.htmlFor = name;
+        this.labelValue = label;
     }
     TextArea.prototype.render = function () {
         return this.element;
@@ -54,6 +56,7 @@ var DateField = /** @class */ (function () {
         this.Label = document.createElement('label');
         this.Label.innerHTML = label;
         this.Label.htmlFor = name;
+        this.labelValue = label;
     }
     DateField.prototype.render = function () {
         return this.element;
@@ -73,6 +76,7 @@ var EmailField = /** @class */ (function () {
         this.Label = document.createElement('label');
         this.Label.innerHTML = label;
         this.Label.htmlFor = name;
+        this.labelValue = label;
     }
     EmailField.prototype.render = function () {
         return this.element;
@@ -82,11 +86,61 @@ var EmailField = /** @class */ (function () {
     };
     return EmailField;
 }());
+var CheckboxField = /** @class */ (function () {
+    function CheckboxField(name, label) {
+        this.name = name;
+        this.type = FieldType.checkbox;
+        this.element = document.createElement('input');
+        this.element.name = name;
+        this.element.type = 'checkbox';
+        this.Label = document.createElement('label');
+        this.Label.innerHTML = label;
+        this.Label.htmlFor = name;
+        this.labelValue = label;
+    }
+    CheckboxField.prototype.render = function () {
+        return this.element;
+    };
+    CheckboxField.prototype.getValue = function () {
+        return this.element.value;
+    };
+    return CheckboxField;
+}());
+var SelectField = /** @class */ (function () {
+    function SelectField(name, label) {
+        var _this = this;
+        var options = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            options[_i - 2] = arguments[_i];
+        }
+        this.name = name;
+        this.type = FieldType.select;
+        this.element = document.createElement('select');
+        options.forEach(function (element) {
+            var opt = document.createElement('option');
+            opt.value = element;
+            opt.text = element;
+            _this.element.add(opt);
+        });
+        this.element.name = name;
+        this.Label = document.createElement('label');
+        this.Label.innerHTML = label;
+        this.Label.htmlFor = name;
+        this.labelValue = label;
+    }
+    SelectField.prototype.render = function () {
+        return this.element;
+    };
+    SelectField.prototype.getValue = function () {
+        return this.element.value;
+    };
+    return SelectField;
+}());
 var Form = /** @class */ (function () {
-    function Form(id) {
+    function Form(idForm, idValues) {
         this.fields = new Array();
-        this.formElement = document.getElementById(id);
-        this.valueElement = document.getElementById('formValues');
+        this.formElement = document.getElementById(idForm);
+        this.valueElement = document.getElementById(idValues);
     }
     Form.prototype.render = function () {
         var _this = this;
@@ -96,25 +150,42 @@ var Form = /** @class */ (function () {
         });
     };
     Form.prototype.getValue = function () {
-        var lista = document.createElement('ul');
+        var lista = document.createElement('div');
+        lista.className = "lista";
         this.valueElement.appendChild(lista);
         this.fields.forEach(function (element) {
             var li = document.createElement('li');
+            li.innerText = element.labelValue + ": " + element.getValue();
             lista.appendChild(li);
-            li.innerText = element.name + " " + element.getValue();
         });
     };
     return Form;
 }());
 var App = /** @class */ (function () {
     function App() {
+        var _a;
+        var _this = this;
+        var elements = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            elements[_i] = arguments[_i];
+        }
+        this.form = new Form('formContainer', 'formValue');
+        (_a = this.form.fields).push.apply(_a, elements);
+        this.submitbutton = document.getElementById('Submit');
+        this.submitbutton.addEventListener('click', function () { return _this.form.getValue(); });
     }
+    App.prototype.appStart = function () {
+        this.form.render();
+    };
     return App;
 }());
-var box = new TextBox('dane', 'Dane:');
-var textarea = new TextArea('tekstarea', 'Tekstarea:');
-var date = new DateField('datefield', 'Data:');
-var form = new Form('formContainer');
-form.fields.push(box, textarea, date);
-form.render();
-form.getValue();
+var textbox = new TextBox('Dane1', 'Textbox');
+var textarea = new TextArea('Dane2', 'Textarea');
+var email = new EmailField('Dane3', 'Email');
+var date = new DateField('Dane4', 'Data');
+var checkbox = new CheckboxField('Dane4', 'Checkbox');
+var select = new SelectField('Dane5', 'Checkbox', 'opt1', 'opt2', 'opt3');
+window.onload = function () {
+    var app = new App(textbox, textarea, email, date, checkbox, select);
+    app.appStart();
+};
