@@ -1,15 +1,5 @@
-enum FieldType {
-    textBox = 1,
-    textarea,
-    date,
-    email,
-    checkbox,
-    select
-}
-
 interface Field {
     name: string;
-    type: FieldType;
     labelValue: string;
     Label: HTMLLabelElement;
     render(): HTMLElement;
@@ -18,14 +8,12 @@ interface Field {
 
 class TextBox implements Field {
     name: string;
-    type: FieldType;
     element: HTMLInputElement;
     labelValue: string;
     Label: HTMLLabelElement;
 
     constructor(name: string, label: string) {
         this.name = name;
-        this.type = FieldType.textBox;
         this.element = <HTMLInputElement>document.createElement('input');
         this.element.name = this.name;
         this.element.type = 'text';
@@ -46,14 +34,12 @@ class TextBox implements Field {
 
 class TextArea implements Field {
     name: string;
-    type: FieldType;
     element: HTMLTextAreaElement;
     labelValue: string;
     Label: HTMLLabelElement;
 
     constructor(name: string, label: string) {
         this.name = name;
-        this.type = FieldType.textarea;
         this.element = <HTMLTextAreaElement>document.createElement('textarea');
         this.element.name = this.name;
         this.Label = <HTMLLabelElement>document.createElement('label');
@@ -73,14 +59,12 @@ class TextArea implements Field {
 
 class DateField implements Field {
     name: string;
-    type: FieldType;
     element: HTMLInputElement;
     labelValue: string;
     Label: HTMLLabelElement;
 
     constructor(name: string, label: string) {
         this.name = name;
-        this.type = FieldType.date;
         this.element = <HTMLInputElement>document.createElement('input');
         this.element.name = name;
         this.element.type = 'date';
@@ -100,14 +84,12 @@ class DateField implements Field {
 
 class EmailField implements Field {
     name: string;
-    type: FieldType;
     element: HTMLInputElement;
     labelValue: string;
     Label: HTMLLabelElement;
 
     constructor(name: string, label: string) {
         this.name = name;
-        this.type = FieldType.email;
         this.element = <HTMLInputElement>document.createElement('input');
         this.element.name = name;
         this.element.type = 'email';
@@ -128,14 +110,12 @@ class EmailField implements Field {
 
 class CheckboxField implements Field {
     name: string;
-    type: FieldType;
     element: HTMLInputElement;
     labelValue: string;
     Label: HTMLLabelElement;
 
     constructor(name: string, label: string) {
         this.name = name;
-        this.type = FieldType.checkbox;
         this.element = <HTMLInputElement>document.createElement('input');
         this.element.name = name;
         this.element.type = 'checkbox';
@@ -155,14 +135,12 @@ class CheckboxField implements Field {
 
 class SelectField implements Field {
     name: string;
-    type: FieldType;
     element: HTMLSelectElement;
     labelValue: string;
     Label: HTMLLabelElement;
 
     constructor(name: string, label: string, ...options: string[]) {
         this.name = name;
-        this.type = FieldType.select;
         this.element = <HTMLSelectElement>document.createElement('select');
         options.forEach(element => {
             const opt = document.createElement('option');

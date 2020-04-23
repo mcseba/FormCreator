@@ -46,7 +46,7 @@ input, textarea, label {
     display: block;
     position: absolute;
     left: 20%;
-    top: 60%;
+    top: 65%;
 }
 .submitButton:hover {
 	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
