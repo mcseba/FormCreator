@@ -164,35 +164,80 @@ class SelectField implements Field {
 
 }
 
+class ListElement {
+    Lista: HTMLElement;
+    fields: Field[];
+    editButton: HTMLElement;
+    deleteButton: HTMLElement;
+    keyID: number;
+
+    constructor (fields: Field[], ID: number) {
+        this.fields = fields;
+        this.keyID = ID;
+
+        const lista = <HTMLTableElement>document.createElement('table');
+        lista.className = "lista";
+        lista.id = <string><unknown>this.keyID;
+        const editbutton = <HTMLButtonElement>document.createElement('button');
+        editbutton.innerHTML = "EDIT";
+        editbutton.className = "editButton";
+        this.editButton = editbutton;
+
+        const deletebutton = <HTMLButtonElement>document.createElement('button');
+        deletebutton.innerHTML = "Delete"
+        deletebutton.className = "deleteButton";
+        this.deleteButton = deletebutton;
+
+        lista.appendChild(this.deleteButton);
+        lista.appendChild(this.editButton);
+
+        this.Lista = lista;
+
+        this.createElement();
+    }
+
+    createElement() {
+        this.fields.forEach( element => {
+            const tr = document.createElement('tr');
+            const tl = document.createElement('th');
+            const td = document.createElement('td');
+            tl.innerHTML = element.labelValue + ": ";
+            td.innerHTML = element.getValue();
+            tr.appendChild(tl);
+            tr.appendChild(td);
+            this.Lista.appendChild(tr);
+        });
+    }
+}
+
 class Form {
     fields: Field[];
-    formElement: HTMLElement;
-    valueElement: HTMLElement; // wyswietlane tam będą wartości pól
+    formContainer: HTMLElement;
+    ValuesContainer: HTMLElement;
+    listArray: ListElement[]; // tablica list
+    keyID: number = 0;
 
     constructor(idForm: string, idValues: string) {
         this.fields = new Array();
-        this.formElement = document.getElementById(idForm);
-        this.valueElement = document.getElementById(idValues);
+        this.listArray = new Array();
+        this.formContainer = document.getElementById(idForm);
+        this.ValuesContainer = document.getElementById(idValues);
     }
 
     render(): void {
         this.fields.forEach(element => {
-            this.formElement.appendChild(element.Label);
-            this.formElement.appendChild(element.render());
+            this.formContainer.appendChild(element.Label);
+            this.formContainer.appendChild(element.render());
         });
     }
 
-    getValue(): void {
-        const lista = <HTMLElement>document.createElement('div');
-        lista.className = "lista";
-        this.valueElement.appendChild(lista);
-
-        this.fields.forEach(element => {
-            const li = document.createElement('li');
-            li.innerText = element.labelValue + ": " + element.getValue();
-            lista.appendChild(li);
-        });
+    renderValue(): void {    
+        const element = new ListElement(this.fields, this.keyID);
+        this.keyID++;
+        this.ValuesContainer.appendChild(element.Lista);
+        this.listArray.push(element);
     }
+
 }
 
 class App {
@@ -203,12 +248,41 @@ class App {
         this.form = new Form('formContainer', 'formValue');
         this.form.fields.push(...elements);
         this.submitbutton = document.getElementById('Submit');
-        this.submitbutton.addEventListener('click', () => this.form.getValue());
+        this.submitbutton.addEventListener('click', () => this.renderValue());
     }
 
     appStart() {
         this.form.render();
     }
+
+    renderValue() {
+        this.form.renderValue();
+
+        this.form.listArray.forEach(element => {
+            element.editButton.addEventListener('click', () => this.makeEditable(element.keyID));
+            element.deleteButton.addEventListener('click', () => this.deleteList(element.keyID));
+        });
+    }
+
+    makeEditable(elemId: number) {
+        const element = document.getElementById(<string><unknown>elemId);
+        const elemData = element.getElementsByTagName('td');
+         
+        for (let i = 0; i < elemData.length; i++) {
+            if (elemData[i].isContentEditable == false) {
+                elemData[i].setAttribute('contenteditable', 'true');
+            } 
+            else {
+                elemData[i].setAttribute('contenteditable', 'false');
+            }            
+        }
+    }
+
+    deleteList(elemId: number) {
+        const element = document.getElementById(<string><unknown>elemId);
+        this.form.ValuesContainer.removeChild(element);
+    }
+
 }
 
 const textbox = new TextBox('Imie', 'Imię');

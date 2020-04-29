@@ -54,11 +54,36 @@ input, textarea, label {
 }
 
 .lista {
-    min-width: 250px;
+    min-width: 300px;
     width: fit-content;
     height: fit-content;
     border: 1px solid rgb(88, 88, 88);
     margin-left: 10%;
     margin-top: 10px;
     padding: 10px;
+}
+
+.editButton {
+    background-color: rgb(9, 48, 223);
+    border-radius: 30px;
+    border: 1px solid black;
+    cursor: pointer;
+    color: white;
+    font-size: 10px;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    margin: 2px;
+}
+
+.deleteButton {
+    background-color: rgb(209, 0, 0);
+    border-radius: 30px;
+    border: 1px solid black;
+    cursor: pointer;
+    color: white;
+    font-size: 10px;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
 }

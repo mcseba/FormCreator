@@ -1,16 +1,6 @@
-var FieldType;
-(function (FieldType) {
-    FieldType[FieldType["textBox"] = 1] = "textBox";
-    FieldType[FieldType["textarea"] = 2] = "textarea";
-    FieldType[FieldType["date"] = 3] = "date";
-    FieldType[FieldType["email"] = 4] = "email";
-    FieldType[FieldType["checkbox"] = 5] = "checkbox";
-    FieldType[FieldType["select"] = 6] = "select";
-})(FieldType || (FieldType = {}));
 var TextBox = /** @class */ (function () {
     function TextBox(name, label) {
         this.name = name;
-        this.type = FieldType.textBox;
         this.element = document.createElement('input');
         this.element.name = this.name;
         this.element.type = 'text';
@@ -30,7 +20,6 @@ var TextBox = /** @class */ (function () {
 var TextArea = /** @class */ (function () {
     function TextArea(name, label) {
         this.name = name;
-        this.type = FieldType.textarea;
         this.element = document.createElement('textarea');
         this.element.name = this.name;
         this.Label = document.createElement('label');
@@ -49,7 +38,6 @@ var TextArea = /** @class */ (function () {
 var DateField = /** @class */ (function () {
     function DateField(name, label) {
         this.name = name;
-        this.type = FieldType.date;
         this.element = document.createElement('input');
         this.element.name = name;
         this.element.type = 'date';
@@ -69,7 +57,6 @@ var DateField = /** @class */ (function () {
 var EmailField = /** @class */ (function () {
     function EmailField(name, label) {
         this.name = name;
-        this.type = FieldType.email;
         this.element = document.createElement('input');
         this.element.name = name;
         this.element.type = 'email';
@@ -89,7 +76,6 @@ var EmailField = /** @class */ (function () {
 var CheckboxField = /** @class */ (function () {
     function CheckboxField(name, label) {
         this.name = name;
-        this.type = FieldType.checkbox;
         this.element = document.createElement('input');
         this.element.name = name;
         this.element.type = 'checkbox';
@@ -114,7 +100,6 @@ var SelectField = /** @class */ (function () {
             options[_i - 2] = arguments[_i];
         }
         this.name = name;
-        this.type = FieldType.select;
         this.element = document.createElement('select');
         options.forEach(function (element) {
             var opt = document.createElement('option');
@@ -136,28 +121,61 @@ var SelectField = /** @class */ (function () {
     };
     return SelectField;
 }());
+var ListElement = /** @class */ (function () {
+    function ListElement(fields, ID) {
+        this.fields = fields;
+        this.keyID = ID;
+        var lista = document.createElement('table');
+        lista.className = "lista";
+        lista.id = this.keyID;
+        var editbutton = document.createElement('button');
+        editbutton.innerHTML = "EDIT";
+        editbutton.className = "editButton";
+        this.editButton = editbutton;
+        var deletebutton = document.createElement('button');
+        deletebutton.innerHTML = "Delete";
+        deletebutton.className = "deleteButton";
+        this.deleteButton = deletebutton;
+        lista.appendChild(this.deleteButton);
+        lista.appendChild(this.editButton);
+        this.Lista = lista;
+        this.createElement();
+    }
+    ListElement.prototype.createElement = function () {
+        var _this = this;
+        this.fields.forEach(function (element) {
+            var tr = document.createElement('tr');
+            var tl = document.createElement('th');
+            var td = document.createElement('td');
+            tl.innerHTML = element.labelValue + ": ";
+            td.innerHTML = element.getValue();
+            tr.appendChild(tl);
+            tr.appendChild(td);
+            _this.Lista.appendChild(tr);
+        });
+    };
+    return ListElement;
+}());
 var Form = /** @class */ (function () {
     function Form(idForm, idValues) {
+        this.keyID = 0;
         this.fields = new Array();
-        this.formElement = document.getElementById(idForm);
-        this.valueElement = document.getElementById(idValues);
+        this.listArray = new Array();
+        this.formContainer = document.getElementById(idForm);
+        this.ValuesContainer = document.getElementById(idValues);
     }
     Form.prototype.render = function () {
         var _this = this;
         this.fields.forEach(function (element) {
-            _this.formElement.appendChild(element.Label);
-            _this.formElement.appendChild(element.render());
+            _this.formContainer.appendChild(element.Label);
+            _this.formContainer.appendChild(element.render());
         });
     };
-    Form.prototype.getValue = function () {
-        var lista = document.createElement('div');
-        lista.className = "lista";
-        this.valueElement.appendChild(lista);
-        this.fields.forEach(function (element) {
-            var li = document.createElement('li');
-            li.innerText = element.labelValue + ": " + element.getValue();
-            lista.appendChild(li);
-        });
+    Form.prototype.renderValue = function () {
+        var element = new ListElement(this.fields, this.keyID);
+        this.keyID++;
+        this.ValuesContainer.appendChild(element.Lista);
+        this.listArray.push(element);
     };
     return Form;
 }());
@@ -172,10 +190,34 @@ var App = /** @class */ (function () {
         this.form = new Form('formContainer', 'formValue');
         (_a = this.form.fields).push.apply(_a, elements);
         this.submitbutton = document.getElementById('Submit');
-        this.submitbutton.addEventListener('click', function () { return _this.form.getValue(); });
+        this.submitbutton.addEventListener('click', function () { return _this.renderValue(); });
     }
     App.prototype.appStart = function () {
         this.form.render();
+    };
+    App.prototype.renderValue = function () {
+        var _this = this;
+        this.form.renderValue();
+        this.form.listArray.forEach(function (element) {
+            element.editButton.addEventListener('click', function () { return _this.makeEditable(element.keyID); });
+            element.deleteButton.addEventListener('click', function () { return _this.deleteList(element.keyID); });
+        });
+    };
+    App.prototype.makeEditable = function (elemId) {
+        var element = document.getElementById(elemId);
+        var elemData = element.getElementsByTagName('td');
+        for (var i = 0; i < elemData.length; i++) {
+            if (elemData[i].isContentEditable == false) {
+                elemData[i].setAttribute('contenteditable', 'true');
+            }
+            else {
+                elemData[i].setAttribute('contenteditable', 'false');
+            }
+        }
+    };
+    App.prototype.deleteList = function (elemId) {
+        var element = document.getElementById(elemId);
+        this.form.ValuesContainer.removeChild(element);
     };
     return App;
 }());
