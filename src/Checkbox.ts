@@ -23,4 +23,7 @@ export class CheckboxField implements Field {
     getValue() {
         return this.element.value;
     }
+    setValue(value: string): void {
+        this.element.value = value;
+    }
 }

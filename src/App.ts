@@ -26,31 +26,10 @@ class App {
 
     renderValue() {
         this.form.renderValue();
-
-        this.form.listArray.forEach(element => {
-            element.editButton.addEventListener('click', () => this.makeEditable(element.keyID));
-            element.deleteButton.addEventListener('click', () => this.deleteList(element.keyID));
+        
+        this.form.fields.forEach(element => {
+            element.setValue("");
         });
-    }
-
-    makeEditable(elemId: number) {
-        console.log(elemId);
-        const element = document.getElementById(<string><unknown>elemId);
-        const elemData = element.getElementsByTagName('td');
-         
-        for (let i = 0; i < elemData.length; i++) {
-            if (elemData[i].isContentEditable === false) {
-                elemData[i].setAttribute('contenteditable', 'true');
-            } 
-            else {
-                elemData[i].setAttribute('contenteditable', 'false');
-            }            
-        }
-    }
-
-    deleteList(elemId: number) {
-        const element = document.getElementById(<string><unknown>elemId);
-        this.form.ValuesContainer.removeChild(element);
     }
 
 }
@@ -60,10 +39,11 @@ const textbox2 = new TextBox('Nazwisko', 'Nazwisko');
 const email = new EmailField('Email', 'Email');
 const select = new SelectField('SelectKierunek', 'Kierunek studiów', 'Informatyka', 'Administracja', 'Browarnictwo');
 const checkbox = new CheckboxField('eLearning', 'Czy preferujesz e-learning?');
+const datetime = new DateField('Data', 'Data');
 const textarea = new TextArea('Uwagi', 'Uwagi');
 
 window.onload = function() {
-    const app = new App(textbox, textbox2, email, select, checkbox, textarea);
+    const app = new App(textbox, textbox2, email, select, checkbox,datetime, textarea);
     app.appStart();
 }
 

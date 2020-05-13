@@ -24,4 +24,7 @@ export class TextBox implements Field {
     getValue(): any {
         return this.element.value;
     }
+    setValue(value: string): void {
+        this.element.value = value;
+    }
 }

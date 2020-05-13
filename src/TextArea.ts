@@ -15,11 +15,13 @@ export class TextArea implements Field {
         this.Label.htmlFor = name;
         this.labelValue = label;
     }
-
     render(): HTMLElement {
         return this.element;
     }
     getValue() {
         return this.element.value;
-    } 
+    }
+    setValue(value: string): void {
+        this.element.value = value;
+    }
 }

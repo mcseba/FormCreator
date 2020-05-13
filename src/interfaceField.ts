@@ -4,4 +4,5 @@ export interface Field {
     Label: HTMLLabelElement;
     render(): HTMLElement;
     getValue(): any;
+    setValue(value: string): any;
 }
