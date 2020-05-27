@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <title>FormCreator</title>
 </head>
 <body>
     <div class="formContainer"> <!--kontener na formularz -->
@@ -21,8 +20,19 @@
         </div>
     </div>
     <div class="formValues" id="formValue"> <!--kontener na wartosci wpisane do formularza-->
-        <h1>Dane z formularza</h1>
+        <h1 style="display: block;">Dane z formularza</h1>
+        <div class="storageButtons"> 
+            <button class="localstorageButton" id="loadStorage">
+                Load List
+            </button>
+            <button class="savetostorageButton" id="saveToStorage">
+                Save List
+            </button>
+        </div>
 
+    </div>
+    <div class="sendButtonDiv">
+        <button class="sendButton" id="send">Send Message!</button>
     </div>
     <script src="bundle.js"></script>
 </body>

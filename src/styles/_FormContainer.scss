@@ -1,1 +1,51 @@
+@import 'colors';
+@import 'buttonMixins';
 
+@mixin formPositioning {
+    position: absolute;
+    left: 10%;
+    width: 300px;
+    min-height: 300px;
+    height: max-content;
+}
+
+.formContainer {
+    width: 50%;
+    height: 100vh;
+    float: left;
+    background-color: $formContainerColor1;
+}
+
+form {
+    @include formPositioning();
+    background-color: $formBgcolor;
+    color: $formFontColor;
+    display: block;
+    border: 1px solid;
+    border-color: $formBorderColor;
+    padding: 10px;
+
+        input, textarea, label {
+            margin: 5px;
+            display: block;
+        }
+}
+
+
+.submit {
+    display: block;
+    position: absolute;
+    top: 74%;
+    left: 17%;
+}
+
+.submitButton {
+    @include basicButton('18px', $buttonFontColor, $buttonColor1,
+    $borderButtonColor1);
+    padding:7px 18px;
+    text-shadow:0px 1px 0px #2f6627;
+
+    .submitButton :hover {
+        background: $submitButtonHoverColor1;
+    }
+}

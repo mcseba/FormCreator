@@ -1,0 +1,14 @@
+@import 'FormContainer';
+@import 'ListContainer';
+@import 'buttonMixins';
+
+$baseFontSize: 20px;
+
+h1 {
+    font-size: $baseFontSize * 1.5;
+    text-align: center;
+}
+
+.sendButton {
+    @include sendButton();
+}

@@ -1,0 +1,43 @@
+@import 'colors';
+@import 'buttonMixins';
+
+.formValues {
+    width: 50%;
+    height: 100vh;
+    float: right;
+    background-color: $valuesContainerColor1;
+}
+
+.lista {
+    min-width: 300px;
+    width: fit-content;
+    height: fit-content;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $listBorderColor;
+    margin-left: 20%;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: block;
+}
+
+.editButton {
+    @include editButton();
+}
+
+.deleteButton {
+    @include deleteButton();
+}
+
+.storageButtons {
+    display: block;
+    height: 30px;
+
+    .localstorageButton {
+        @include storageButton(66%);
+    }
+
+    .savetostorageButton {
+        @include storageButton(75%);
+    }
+}

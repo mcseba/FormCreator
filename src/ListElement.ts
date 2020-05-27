@@ -1,4 +1,5 @@
 import {Field} from './interfaceField';
+import { EmailField } from './EmailField';
 
 export class ListElement {
     Lista: HTMLElement;
@@ -6,11 +7,12 @@ export class ListElement {
     editButton: HTMLElement;
     deleteButton: HTMLElement;
     keyID: number;
+    ValuesForSavingInStorage: any[];
 
     constructor (fields: Field[], ID: number) {
         this.fields = fields;
         this.keyID = ID;
-
+        this.ValuesForSavingInStorage = new Array();
         const lista = <HTMLTableElement>document.createElement('table');
         lista.className = "lista";
         lista.id = <string><unknown>this.keyID;
@@ -45,6 +47,9 @@ export class ListElement {
             tr.appendChild(tl);
             tr.appendChild(td);
             this.Lista.appendChild(tr);
+            this.ValuesForSavingInStorage.push(
+                {label: el.labelValue, value: el.getValue()}
+            );
         });
     }
 
@@ -62,7 +67,8 @@ export class ListElement {
     }
 
     deleteList() {
-        const parentNode = document.getElementById('formValue');
+        const parentNode = document.getElementById('listContainer');
+        console.log(parentNode);
         parentNode.removeChild(this.Lista);
     }
 }

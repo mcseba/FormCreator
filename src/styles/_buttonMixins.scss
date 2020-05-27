@@ -1,0 +1,53 @@
+@import 'colors';
+
+@mixin basicButton ($fontSize, $fontColor, $bg-color, $borderColor) {
+    background: $bg-color;
+    color: $fontColor;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $borderColor;
+    border-radius: 30px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@mixin storageButton ($leftProp) {
+    @include basicButton('12px', $buttonFontColor, $buttonColor1,
+    $borderButtonColor1 );
+    display: block;
+    position: absolute;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    top: 12%;
+    left: $leftProp;
+}
+
+@mixin editButton {
+    @include basicButton('10px', $buttonFontColor, $buttonEditColor, 
+    $buttonEditBorderColor);
+    margin: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+@mixin deleteButton {
+    @include basicButton('10px', $buttonFontColor, $buttonDeleteColor,
+    $buttonDeleteBorderColor );
+    position: relative;
+    display: inline-block;
+}
+
+@mixin sendButton {
+    background-color: $sendButtonBgColor;
+    font-size: 20px;
+    color: $sendButtonFontColor;
+    position: absolute;
+    bottom: 0;
+    left: 45%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $sendButtonFontColor;
+    border-radius: 20px;
+}
