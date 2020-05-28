@@ -15,6 +15,14 @@ export class SelectField implements Field {
             opt.text = element;
             this.element.add(opt);
         });
+        this.fetchOptions<{name: string, region: string}>("https://restcountries.eu/rest/v2/all").then((data) => {
+        data.filter(filtered => filtered.region == "Europe").map(x=> x.name).forEach(element => {
+        let option = <HTMLOptionElement>document.createElement("option");
+        option.text = element;
+        option.value = element;
+        this.element.options.add(option);
+            })
+        });
         this.element.name = name;
         this.Label = <HTMLLabelElement>document.createElement('label');
         this.Label.innerHTML = label;
@@ -30,5 +38,16 @@ export class SelectField implements Field {
     }
     setValue(value: string): void {
         this.element.value = value;
+    }
+
+    fetchOptions<T>(url: string): Promise<T[]> {
+        return fetch(url)
+        .then(res => res.json())
+        .then(res => { 
+            return res;
+        })
+        .catch((e) => {
+          console.log("API errore fetching ");
+        });
     }
 }
