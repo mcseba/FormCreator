@@ -1,5 +1,6 @@
 import {Field} from './interfaceField';
-import { EmailField } from './EmailField';
+import {Socket} from 'dgram';
+import '../src/client';
 
 export class ListElement {
     Lista: HTMLElement;
@@ -51,6 +52,7 @@ export class ListElement {
                 {label: el.labelValue, value: el.getValue()}
             );
         });
+        this.sendValuesToServer();
     }
 
     editList() {
@@ -70,5 +72,15 @@ export class ListElement {
         const parentNode = document.getElementById('listContainer');
         console.log(parentNode);
         parentNode.removeChild(this.Lista);
+    }
+
+    sendValuesToServer() : void {
+        console.log('method');
+        let socket = new WebSocket("ws://localhost:8080");
+        this.ValuesForSavingInStorage.forEach(e => {
+            socket.onmessage = function() {
+                console.log(e.getValue())
+            };
+        })
     }
 }

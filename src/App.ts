@@ -8,16 +8,11 @@ import {SelectField} from './SelectField';
 import {ListElement} from './ListElement';
 import {Form} from './Form';
 
-import { Client } from './client';
-import { Server } from './server';
-
 import './styles/styles.scss';
 
 
 class App {
     form: Form;
-    Server: Server;
-    Client: Client;
     submitbutton: HTMLElement;
     loadStorageButton: HTMLElement;
     saveToStorageButton: HTMLElement;
@@ -25,9 +20,6 @@ class App {
     constructor(...elements: Field[]) {
         this.form = new Form('formContainer', 'formValue');
         this.form.fields.push(...elements);
-
-        this.Server = new Server(8080);
-        this.Client = new Client("ws://localhost:8080");
 
         this.submitbutton = document.getElementById('Submit');
         this.submitbutton.addEventListener('click', () => this.renderValue());
