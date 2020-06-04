@@ -2,19 +2,21 @@
 @import 'buttonMixins';
 
 .formValues {
-    width: 50%;
+    width: 40%;
     height: 100vh;
     float: right;
     background-color: $valuesContainerColor1;
 }
 
 .lista {
+    background-color: $listBgColor;
     min-width: 300px;
     width: fit-content;
     height: fit-content;
-    border-width: 1px;
-    border-style: solid;
+    border-width: 2px;
+    border-style: dashed;
     border-color: $listBorderColor;
+    border-radius: 15px;
     margin-left: 20%;
     margin-bottom: 10px;
     padding: 10px;
@@ -34,10 +36,13 @@
     height: 30px;
 
     .localstorageButton {
-        @include storageButton(66%);
+        @include storageButton(65%);
     }
 
     .savetostorageButton {
         @include storageButton(75%);
+    }
+    .clearStorageButton {
+        @include storageButton(85%);
     }
 }

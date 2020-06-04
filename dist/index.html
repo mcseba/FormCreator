@@ -6,21 +6,48 @@
     <title>FormCreator</title>
 </head>
 <body>
+    <div class="draggableContent">
+        <form class="dragForm">
+            <input type="text" id="labelInput" class="LabelInput" placeholder="Type label">
+            <div class="draggableElements" id="draggableInputText" draggable="true">
+                Text input
+            </div>
+            <div class="draggableElements" id="draggableInputEmail" draggable="true">
+                Email input
+            </div>
+            <div class="draggableElements" id="draggableSelect" draggable="true">
+                Select country
+            </div>
+            <div class="draggableElements" id="draggableCheckbox" draggable="true">
+                Checkbox
+            </div>
+            <div class="draggableElements" id="draggableTextarea" draggable="true">
+                Text area
+            </div>
+            <div class="draggableElements" id="draggableInputDate" draggable="true">
+                Date picker
+            </div>
+        </form>
+    </div>
     <div class="formContainer"> <!--kontener na formularz -->
         <div class="container">
-            <h1>Formularz</h1>
-            <form id="formContainer">
+            <h1>Form</h1>
+            <form class="finalForm" id="formContainer">
     
             </form>
             <div class="submit">
                 <button class="submitButton" id="Submit">
-                    SUBMIT
+                Submit ->
+                </button>
+
+                <button class="clearForm" id="Clear">
+                    <- Clear
                 </button>
             </div>
         </div>
     </div>
     <div class="formValues" id="formValue"> <!--kontener na wartosci wpisane do formularza-->
-        <h1 style="display: block;">Dane z formularza</h1>
+        <h1 style="display: block;">Form data</h1>
         <div class="storageButtons"> 
             <button class="localstorageButton" id="loadStorage">
                 Load List
@@ -28,11 +55,14 @@
             <button class="savetostorageButton" id="saveToStorage">
                 Save List
             </button>
+            <button class="clearStorageButton" id="clearStorage">
+                Clear Storage
+            </button>
         </div>
 
     </div>
     <div class="sendButtonDiv">
-        <button class="sendButton" id="send">Send Message!</button>
+        <button class="sendButton" id="send">Check connection</button>
     </div>
     <script src="bundle.js"></script>
     <script src="server.js"></script>

@@ -14,6 +14,7 @@ export class ListElement {
         this.fields = fields;
         this.keyID = ID;
         this.ValuesForSavingInStorage = new Array();
+
         const lista = <HTMLTableElement>document.createElement('table');
         lista.className = "lista";
         lista.id = <string><unknown>this.keyID;
@@ -36,6 +37,8 @@ export class ListElement {
         this.Lista = lista;
 
         this.createElement();
+
+        this.sendValuesToServer(this.ValuesForSavingInStorage);
     }
 
     createElement() {
@@ -52,7 +55,6 @@ export class ListElement {
                 {label: el.labelValue, value: el.getValue()}
             );
         });
-        this.sendValuesToServer();
     }
 
     editList() {
@@ -61,26 +63,24 @@ export class ListElement {
         for (let i = 0; i < data.length; i++) {
             if (data[i].isContentEditable === false) {
                 data[i].setAttribute('contenteditable', 'true');
-            } 
+            }
             else {
                 data[i].setAttribute('contenteditable', 'false');
-            }            
+            }
         }
     }
 
     deleteList() {
         const parentNode = document.getElementById('listContainer');
-        console.log(parentNode);
         parentNode.removeChild(this.Lista);
     }
 
-    sendValuesToServer() : void {
-        console.log('method');
-        let socket = new WebSocket("ws://localhost:8080");
-        this.ValuesForSavingInStorage.forEach(e => {
-            socket.onmessage = function() {
-                console.log(e.getValue())
-            };
-        })
+    sendValuesToServer(values: any) : void {
+        const socket = new WebSocket("ws://localhost:8080");
+        socket.onopen = function(event) {
+            values.forEach( (element) => {
+                socket.send(JSON.stringify(element));
+            });
+        }
     }
 }
